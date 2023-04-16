@@ -1,0 +1,28 @@
+sensor:
+  # ESP32: GPIO32 through GPIO39 can be used. 
+  - platform: adc
+    id: temperature_sensor
+    pin: 5
+    update_interval: 5s
+
+  - platform: ntc
+    sensor: temperature_sensor
+    name: "NTC Temperature Sensor"
+    #TODO: remove calibration if using a standard NTC
+    calibration:
+      b_constant: 3950
+      reference_temperature: 25°C
+      reference_resistance: 50kΩ
+
+  - platform: resistance
+    id: resistance_sensor
+    sensor: temperature_sensor
+    configuration: DOWNSTREAM
+    # resistor: 50kΩ
+    resistor: 100kΩ
+    reference_voltage: 3.3V
+    name: "Resistance Sensor"
+    #TODO: Make internal
+
+# TODO: power off the transistor when not in use
+# Toggle Pin 10 (thermsistor_power)

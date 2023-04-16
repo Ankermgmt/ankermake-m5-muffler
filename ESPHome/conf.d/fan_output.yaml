@@ -1,0 +1,19 @@
+# Control the PWM signal of the output fan
+
+output:
+  - platform: ledc
+    pin: 39
+    frequency: 20kHz
+    id: heatsink_fan
+
+fan:
+  - platform: speed
+    output: heatsink_fan
+    name: "Heatsink Fan"
+    disabled_by_default: false
+    internal: false #TODO: make internal, unless we want people to override the speed manually (dangerous)
+    #oscillation_output: heatsink_fan #TODO: not working
+    speed_count: 100 #TODO: do we need granular speed access, or is off/medium/high enough?
+    # speed:
+    #   - value_template: "{{ (100 - (100 - value | float) * 0.01) }}"
+    #   - entity_id: sensor.fan_duty_cycle

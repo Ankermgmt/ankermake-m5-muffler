@@ -1,0 +1,8 @@
+#TODO: Implement ADXL345
+# SCL = 35
+# SDA = 33
+# accel_in = 8
+
+# Pin 8 can be configured to change state when a threshold is met
+# Could be used if motion is detected
+# https://github.com/esphome/feature-requests/issues/511

@@ -1,0 +1,41 @@
+substitutions:
+  name: esp32-m5-muffler
+  friendly_name: AnkerMake M5 Muffler
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  platformio_options:
+    board_build.extra_flags:
+      - "-DARDUINO_USB_CDC_ON_BOOT=0" #https://github.com/esphome/issues/issues/3988#issuecomment-1399025200
+
+esp32:
+  board: lolin_s2_mini
+  variant: esp32s2
+
+logger:
+api:
+ota:
+
+dashboard_import:
+  package_import_url: github://Ankermgmt/ankermake-m5-muffler/ESPHome/config.yaml@main
+  import_full_config: false # or true
+
+wifi: 
+  output_power: 10 # https://github.com/esphome/issues/issues/3988#issuecomment-1449954758
+  ap:
+
+# Sets up the improv via serial client for Wi-Fi provisioning
+improv_serial:
+  # next_url: https://example.com/project-template/manual?ip={{ip_address}}&name={{device_name}}&version={{esphome_version}}
+
+<<: !include conf.d/accelerometer.yaml
+<<: !include conf.d/button.yaml
+<<: !include conf.d/fan_input.yaml
+<<: !include conf.d/fan_output.yaml
+<<: !include conf.d/leds.yaml
+<<: !include conf.d/state_machine.yaml
+<<: !include conf.d/status_led.yaml
+<<: !include conf.d/temperature_sensor.yaml
+<<: !include conf.d/uart.yaml
+<<: !include conf.d/voltage_sensor.yaml

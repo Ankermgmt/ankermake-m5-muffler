@@ -1,0 +1,18 @@
+# Button is pin on the side of the ESP32s2
+# Connected to pin 8
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 0
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Button"
+    on_press:
+      then:
+        - state_machine.transition: TOGGLE
+    on_release:
+      then:
+        - logger.log: "Fan Button Released"
+
+#TODO: Implement touch sensors
+# https://github.com/esphome/issues/issues/4411#issuecomment-1509475981

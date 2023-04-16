@@ -1,0 +1,4 @@
+status_led:
+  pin:
+    number: 15
+    inverted: true

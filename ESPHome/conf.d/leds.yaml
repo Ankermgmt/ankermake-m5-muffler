@@ -1,0 +1,40 @@
+# Led Strip 
+
+light:
+  - platform: fastled_clockless
+    id: fastled_light
+    pin: 36 #TODO: invalid pin specified
+    chipset: WS2812
+    num_leds: 10 #TODO: change this to the correct value
+    name: "LEDs"
+    effects:
+      - addressable_rainbow:
+          name: Rainbow Effect
+          speed: 10
+          width: 100
+      - addressable_color_wipe:
+      # This breathing effect works, but it is a little choppy at low values
+      # https://thingpulse.com/breathing-leds-cracking-the-algorithm-behind-our-breathing-pattern/
+      # https://avital.ca/notes/a-closer-look-at-apples-breathing-light
+      - addressable_lambda:
+          name: Breathing Effect
+          update_interval: 10ms
+          lambda: |-
+           static float b = 0;
+            b = (sin(millis() / 1000.0) + 1.0) / 2.0;
+            auto color = esphome::light::ESPColor(0, 0, uint8_t(255 * b));
+            for (int i = 0; i < it.size(); ++i) {
+              it[i] = color;
+            }
+      # 42.546 should be replaced by 83.333
+      - addressable_lambda:
+          name: Apple Breathing
+          update_interval: 10ms
+          lambda: |-
+            float t = millis() / 2000.0;
+            float brightness_float = (exp(sin(t * PI)) - 0.368) * 42.546;
+            uint8_t brightness = uint8_t(brightness_float);
+            auto color = esphome::light::ESPColor(brightness, 0, 0);
+            for (int i = 0; i < it.size(); ++i) {
+              it[i] = color;
+            }
