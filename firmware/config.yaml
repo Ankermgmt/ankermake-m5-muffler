@@ -30,6 +30,7 @@ improv_serial:
   # next_url: https://example.com/project-template/manual?ip={{ip_address}}&name={{device_name}}&version={{esphome_version}}
 
 <<: !include conf.d/accelerometer.yaml
+<<: !include conf.d/ambient_temperature.yaml
 <<: !include conf.d/button.yaml
 <<: !include conf.d/fan_input.yaml
 <<: !include conf.d/fan_output.yaml
