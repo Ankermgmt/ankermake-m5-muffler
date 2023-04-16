@@ -1,5 +1,5 @@
 substitutions:
-  name: esp32-m5-muffler
+  name: ankermake-m5-muffler
   friendly_name: AnkerMake M5 Muffler
 
 esphome:

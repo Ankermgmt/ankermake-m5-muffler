@@ -3,9 +3,10 @@
 light:
   - platform: fastled_clockless
     id: fastled_light
-    pin: 36 #TODO: invalid pin specified
+    # pin: 38 #TODO: invalid pin specified
+    pin: 3 # v0.6 boards were mistakenly wired to pin 36, which won't compile
     chipset: WS2812
-    num_leds: 10 #TODO: change this to the correct value
+    num_leds: 12
     name: "LEDs"
     effects:
       - addressable_rainbow:
