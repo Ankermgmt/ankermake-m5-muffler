@@ -4,6 +4,7 @@
 # https://learn.adafruit.com/thermistor/using-a-thermistor#self-heating-3-22
 
 #TODO: reduce the logging level
+#TODO: test how accurate around 260 C
 sensor:
   - platform: ntc
     name: Thermsistor Temperature
@@ -28,20 +29,37 @@ sensor:
   - platform: adc
     id: source_sensor
     pin: 5
-    update_interval: 2s
+    update_interval: never
     # https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32s2/api-reference/peripherals/adc.html
     # https://esphome.io/components/sensor/adc.html#esp32-attenuation
     attenuation: 11db
-    on_value:
-      then:
-        - component.update: analog_value
+    # on_value:
+    #   then:
+    #     - component.update: analog_value
 
   - platform: template
     name: "Thermsistor Voltage"
     id: analog_value
     unit_of_measurement: "V"
-    update_interval: 2s
+    # update_interval: 2s
+    update_interval: never
     accuracy_decimals: 3
     lambda: |- 
       auto adc_fraction = id(source_sensor).state;
       return adc_fraction;
+
+switch:
+  - platform: gpio
+    pin: 10
+    id: thermistor_power
+    restore_mode: ALWAYS_OFF
+
+interval:
+  - interval: 2s
+    then:
+      - switch.turn_on: thermistor_power
+      - output.turn_on: onboard_led
+      - component.update: source_sensor
+      - component.update: analog_value
+      - output.turn_off: onboard_led
+      - switch.turn_off: thermistor_power
