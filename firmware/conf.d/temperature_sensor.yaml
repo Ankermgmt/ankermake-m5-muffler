@@ -73,14 +73,14 @@ sensor:
     name: Thermsistor Temperature
     sensor: resistance_sensor
     calibration:
-      b_constant: 3950
-      reference_temperature: 20°C
-      reference_resistance: 100kOhm
-  #     - 400kOhm -> 0°C
-  #     # - 82kOhm -> 21°C
-  #     - 93kOhm -> 21°C
-  #     # - 3kOhm -> 152°C 
-  #     - 3kOhm -> 152°C 
+      # b_constant: 3950
+      # reference_temperature: 21°C
+      # reference_resistance: 88kOhm
+      - 400kOhm -> 0°C
+      # - 82kOhm -> 21°C
+      - 93kOhm -> 21°C
+      # - 3kOhm -> 152°C 
+      - 3kOhm -> 152°C 
 
 
   # https://esphome.io/components/sensor/resistance.html
@@ -88,12 +88,14 @@ sensor:
     id: resistance_sensor
     sensor: source_sensor
     configuration: DOWNSTREAM
-    resistor: 100kOhm
+    # resistor: 100kOhm
+    # resistor: 88.6kOhm # TODO: The test resistor is very inaccurate, it sholuod be 100kOhm, but actually is 88.6kOhm
+    resistor: 300kOhm
     name: Thermsistor Resistance
-    unit_of_measurement: 'kΩ'
-    accuracy_decimals: 2
-    filters:
-      - multiply: 0.001
+    unit_of_measurement: 'Ω'
+    accuracy_decimals: 0
+    # filters:
+    #   - multiply: 0.001 #This is the problem it fixes the gui, but breaks the maths
 
   - platform: adc
     id: source_sensor
@@ -101,8 +103,8 @@ sensor:
     update_interval: 2s
     # https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32s2/api-reference/peripherals/adc.html
     # https://esphome.io/components/sensor/adc.html#esp32-attenuation
-    # attenuation: 11db
-    attenuation: auto
+    attenuation: 11db
+    # attenuation: auto
     # filters:
     #   - sliding_window_moving_average:
     #       window_size: 10
@@ -129,3 +131,15 @@ sensor:
 
 # https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32s2/api-reference/peripherals/adc.html
 
+# pin 5 to gnd
+# 0.034V
+# -918.3 C
+# 0.92 k0hm
+
+# pin 5 to 3.3v
+# 2.640 v
+# 411.2 C
+# 354.63 k0hm
+
+# pin 5 not connected to thermsistor (88kohm to 3.3v)
+# 2.640 v
