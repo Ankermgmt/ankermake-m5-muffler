@@ -1,0 +1,58 @@
+# This works, but it fluctates a lot more than I expect.
+# sensor:
+#   # TODO: change to support a 20khz PWM signal
+#   # TODO: change all pins to ones compatible with breadboards / shields
+#   - platform: pulse_width
+#     pin: 
+#       number: 16 
+#       mode: INPUT_PULLDOWN #TODO: is this needed?
+#     name: Fan Duty Cycle
+#     # update_interval: 500ms
+#     update_interval: 2s
+#     unit_of_measurement: '%'
+#     accuracy_decimals: 0
+#     filters:
+#       - throttle: 5s
+#       - lambda: |-
+#           auto frequency = 20000.0;
+#           auto period = 1.0 / frequency;
+#           return (x / period) * 100.0;
+#       # Smooth out any jitter in the signal
+#       # TODO: this filtering might be a hardware interfierence problem
+#       # I didn't see this issue on the esp8266 without a breakboard
+#       # - sliding_window_moving_average:
+#       #     window_size: 3
+#       #     send_every: 1
+#       #     send_first_at: 1
+#       # - median:
+#       #     window_size: 10 # Increased window size for more stable output
+#       #     send_every: 1
+#       #     send_first_at: 1
+#       # - exponential_moving_average:
+#       #     alpha: 0.5 # Increased alpha value for better smoothing
+#       #     send_every: 1
+#       # - throttle: 5s # Log the value every 5 seconds
+
+sensor:
+  - platform: pulse_counter
+    pin:
+      number: 37
+      mode: INPUT_PULLDOWN # Use built-in pull-down resistor (only for ESP32)
+    name: Fan Duty Cycle
+    # update_interval: 500ms
+    unit_of_measurement: '%'
+    accuracy_decimals: 0
+    # filters:
+    #   - lambda: |-
+    #       const float frequency = 20000.0;
+    #       const float period = 1.0 / frequency;
+    #       const float pulse_width_seconds = x / 2.0 * 60.0 / 1000000.0;
+    #       return (pulse_width_seconds / period) * 100.0;
+    #   - throttle: 5s # Log the value every 5 seconds
+    count_mode:
+      rising_edge: DISABLE
+      falling_edge: INCREMENT
+      # Set the following filter value based on your specific hardware timer's frequency
+      # Start at 1us and increase until a good balance between accuracy and stability is found
+      # for a 20khz signal this should be less than 50us
+    # filter: 13us

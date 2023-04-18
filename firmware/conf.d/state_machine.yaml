@@ -8,8 +8,11 @@ state_machine:
     states:
     - "NORMAL"
     - "SILENCED"
-    # TODO: Boost mode? 
+    - "ERROR"
+    - "TURBO"
+    - "PARTY"
     initial_state: NORMAL
+    id: state_machine_mode
     inputs:
       - name: TOGGLE
         transitions:
@@ -19,3 +22,18 @@ state_machine:
 text_sensor:
   - platform: state_machine
     name: Cooling Mode
+
+# This is the real magic of the muffler
+# Check every x seconds to verify that all conditions are met to silence the fan
+# If they are, then silence the fan
+# If they are not, then turn the fan back full blast
+#TODO: full testing
+# interval:
+#   - interval: 5s
+#     then:
+#       - lambda: |-
+#           if (id(state_machine_mode) == SILENCED && id(heater_state).state == "OFF") {
+#             echo("Silencing Fan");
+#           } else {
+#             echo("Disabling Fan Silence");
+#           }

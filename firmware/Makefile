@@ -17,3 +17,5 @@ logs:
 	esphome logs config.yaml --device $(USB_ADDRESS)
 dashboard:
 	esphome dashboard . --open-ui --address 127.0.0.1 --port 6053
+run:
+	esphome run config.yaml --device $(USB_ADDRESS)

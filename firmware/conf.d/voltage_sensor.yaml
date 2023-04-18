@@ -8,5 +8,17 @@ binary_sensor:
       number: 12
       mode: INPUT_PULLUP # set the mode to INPUT_PULLUP or INPUT_PULLDOWN depending on your wiring
     name: "Heater"
+    id: heater
     filters:
       - invert:
+
+text_sensor:
+  - platform: template
+    name: "Heater State"
+    id: heater_state
+    lambda: |-
+      if (id(heater).state) {
+        return "ON";
+      } else {
+        return "OFF";
+      }
