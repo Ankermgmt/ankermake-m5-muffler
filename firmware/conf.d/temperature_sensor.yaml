@@ -1,96 +1,24 @@
-# sensor:
-#   # ESP32: GPIO32 through GPIO39 can be used. 
-#   - platform: adc
-#     id: temperature_sensor
-#     pin: 5
-#     update_interval: 1s
-#     raw: true
-#     state_class: measurement
+# Read the temperature from a NTC thermistor
+# https://esphome.io/components/sensor/ntc.html
+# https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32s2/api-reference/peripherals/adc.html
+# https://learn.adafruit.com/thermistor/using-a-thermistor#self-heating-3-22
 
-#     # accuracy_decimals: 1
-#     # filters:
-#     #   # - multiply: 3.3 https://esphome.io/components/sensor/adc.html
-#     #   - sliding_window_moving_average:
-#     #       window_size: 5
-#     #       send_every: 5
-
-#   - platform: ntc
-#     sensor: temperature_sensor
-#     name: "NTC Temperature Sensor"
-#     #TODO: remove calibration if using a standard NTC
-#     calibration:
-#       b_constant: 3950
-#       reference_temperature: 25°C
-#       reference_resistance: 100kOhm
-
-#   - platform: resistance
-#     id: resistance_sensor
-#     sensor: temperature_sensor
-#     configuration: DOWNSTREAM # If resistor is before or after the NTC
-#     # configuration: UPSTREAM # If resistor is before or after the NTC
-#     # resistor: 50kΩ
-#     resistor: 100kΩ
-#     reference_voltage: 3.3V
-#     name: "Resistance Sensor"
-#     #TODO: Make internal
-
-
-# # TODO: power off the transistor when not in use
-# # Toggle Pin 10 (thermsistor_power)
-# # https://esphome.io/components/sensor/ntc.html?highlight=ntc#self-heating
-
-# sensor:
-  # - platform: ntc
-  #   sensor: thermistor_sensor
-  #   name: "Temperature"
-  #   unit_of_measurement: "°C"
-  #   accuracy_decimals: 2
-
-
-
-  # - platform: adc
-  #   id: adc_sensor
-  #   pin: 5
-  #   attenuation: 0db
-  #   update_interval: 60s
-  #   filters:
-  #     - multiply: 3300.0
-
-# Calculate voltage divider
-# resistor:
-#   - platform: voltage_divider
-#     sensor: adc_sensor
-#     configuration: SERIES
-#     upper_resistor: 100000
-#     lower_resistor: 'lambda: return x;'
-#     name: "Voltage Divider"
-
-
-#------------------
-
+#TODO: reduce the logging level
 sensor:
   - platform: ntc
     name: Thermsistor Temperature
     sensor: resistance_sensor
     calibration:
-      # b_constant: 3950
-      # reference_temperature: 21°C
-      # reference_resistance: 88kOhm
       - 400kOhm -> 0°C
-      # - 82kOhm -> 21°C
       - 93kOhm -> 21°C
-      # - 3kOhm -> 152°C 
       - 3kOhm -> 152°C 
-
 
   # https://esphome.io/components/sensor/resistance.html
   - platform: resistance
     id: resistance_sensor
     sensor: source_sensor
     configuration: DOWNSTREAM
-    # resistor: 100kOhm
-    # resistor: 88.6kOhm # TODO: The test resistor is very inaccurate, it sholuod be 100kOhm, but actually is 88.6kOhm
-    resistor: 300kOhm
+    resistor: ${ntc_resistance} #For best results have a +/- 1% resistor
     name: Thermsistor Resistance
     unit_of_measurement: 'Ω'
     accuracy_decimals: 0
@@ -104,15 +32,6 @@ sensor:
     # https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32s2/api-reference/peripherals/adc.html
     # https://esphome.io/components/sensor/adc.html#esp32-attenuation
     attenuation: 11db
-    # attenuation: auto
-    # filters:
-    #   - sliding_window_moving_average:
-    #       window_size: 10
-    #       send_every: 1
-    # filters:
-    #   - calibrate_linear:
-    #       - 0.0 -> 0.0
-    #       - 1.75 -> 1.65
     on_value:
       then:
         - component.update: analog_value
@@ -120,26 +39,9 @@ sensor:
   - platform: template
     name: "Thermsistor Voltage"
     id: analog_value
-    # icon: "mdi:gauge"
     unit_of_measurement: "V"
     update_interval: 2s
     accuracy_decimals: 3
     lambda: |- 
       auto adc_fraction = id(source_sensor).state;
       return adc_fraction;
-
-
-# https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32s2/api-reference/peripherals/adc.html
-
-# pin 5 to gnd
-# 0.034V
-# -918.3 C
-# 0.92 k0hm
-
-# pin 5 to 3.3v
-# 2.640 v
-# 411.2 C
-# 354.63 k0hm
-
-# pin 5 not connected to thermsistor (88kohm to 3.3v)
-# 2.640 v

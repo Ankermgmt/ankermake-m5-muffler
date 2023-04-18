@@ -1,6 +1,7 @@
 substitutions:
   name: ankermake-m5-muffler
   friendly_name: AnkerMake M5 Muffler
+  ntc_resistance: 100kOhm # 10kOhm, 50kOhm, 100kOhm are common values. R1 resistor must match this value
 
 esphome:
   name: ${name}
