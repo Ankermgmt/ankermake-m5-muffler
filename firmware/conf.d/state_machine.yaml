@@ -5,8 +5,19 @@ external_components:
 
 state_machine:
   - name: Fan Mode
+    initial_state: "BOOTING"
+    id: state_machine_mode
     states:
       - name: NORMAL
+        on_set:
+          - logger.log: "Normal State"
+          - light.turn_on:
+              id: fastled_light
+              red: 0%
+              green: 100%
+              blue: 0%
+              brightness: 1.0
+              effect: None
         on_enter:
           - logger.log: "Normal State"
           - light.turn_on:
@@ -26,12 +37,6 @@ state_machine:
               blue: 100%
               brightness: 1.0
               effect: None
-      # - name: ERROR
-      #   on_enter:
-      #     - logger.log: "Fan is in error state"
-      #     - light.turn_on:
-      #         id: fastled_light
-      #         effect: Flashing Red
       - name: ERROR
         on_enter:
           - logger.log: "Temperature too high/low"
@@ -59,20 +64,17 @@ state_machine:
               blue: 100%
               effect: Scanning color"
       - name: BOOTING
-        on_enter:
+        on_set:
           - logger.log: "Fan is booting"
+          - light.turn_off:
+              id: fastled_light
           - light.turn_on:
               id: fastled_light
-              red: 0%
-              green: 0%
-              blue: 100%
-              effect: Flashing Red
-    initial_state: "BOOTING"
-    id: state_machine_mode
+              effect: Rainbow Effect
     inputs:    
-      - name: "BOOTED"
-        transitions:
-          - BOOTING -> NORMAL
+      # - name: "BOOTED"
+      #   transitions:
+      #     - BOOTING -> NORMAL
       - name: "TOGGLE"
         transitions:
           - NORMAL -> SILENCED
