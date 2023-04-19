@@ -8,7 +8,7 @@ state_machine:
     states:
       - name: NORMAL
         on_enter:
-          - logger.log: "Fan is turned off"
+          - logger.log: "Normal State"
           - light.turn_on:
               id: fastled_light
               red: 0%
@@ -18,7 +18,7 @@ state_machine:
               effect: None
       - name: SILENCED
         on_enter:
-          - logger.log: "Fan is turned on"
+          - logger.log: "Silenced State"
           - light.turn_on:
               id: fastled_light
               red: 0%
@@ -26,12 +26,23 @@ state_machine:
               blue: 100%
               brightness: 1.0
               effect: None
+      # - name: ERROR
+      #   on_enter:
+      #     - logger.log: "Fan is in error state"
+      #     - light.turn_on:
+      #         id: fastled_light
+      #         effect: Flashing Red
       - name: ERROR
         on_enter:
-          - logger.log: "Fan is in error state"
+          - logger.log: "Temperature too high/low"
           - light.turn_on:
               id: fastled_light
+              red: 0%
+              green: 0%
+              blue: 100%
               effect: Flashing Red
+          # TODO: set fans to 100%
+          # TODO: Change from flashing red to a unique pattern
       - name: TURBO
         on_enter:
           - logger.log: "Fan is in turbo mode"
@@ -47,13 +58,31 @@ state_machine:
               green: 50%
               blue: 100%
               effect: Scanning color"
-    initial_state: "NORMAL" #TODO: should we default to error? or normal?
+      - name: BOOTING
+        on_enter:
+          - logger.log: "Fan is booting"
+          - light.turn_on:
+              id: fastled_light
+              red: 0%
+              green: 0%
+              blue: 100%
+              effect: Flashing Red
+    initial_state: "BOOTING"
     id: state_machine_mode
-    inputs:
+    inputs:    
+      - name: "BOOTED"
+        transitions:
+          - BOOTING -> NORMAL
       - name: "TOGGLE"
         transitions:
           - NORMAL -> SILENCED
           - SILENCED -> NORMAL
+      - name: "ERROR"
+        transitions:
+          - NORMAL -> ERROR
+          - SILENCED -> ERROR
+          - TURBO -> ERROR
+          - PARTY -> ERROR
 
 text_sensor:
   - platform: state_machine
