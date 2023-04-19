@@ -9,6 +9,10 @@ light:
     name: "LEDs" #TODO: make internal
     rgb_order: ${rgb_order}
     effects:
+      - addressable_scan:
+          name: "Scanning color"
+          move_interval: 50ms
+          scan_width: 1
       - strobe:
           name: "Flashing Red"
           colors:
@@ -26,8 +30,8 @@ light:
               duration: 500ms
       - addressable_rainbow:
           name: Rainbow Effect
-          speed: 10
-          width: 100
+          speed: 25
+          width: 15
       - addressable_color_wipe:
       # This breathing effect works, but it is a little choppy at low values
       # https://thingpulse.com/breathing-leds-cracking-the-algorithm-behind-our-breathing-pattern/

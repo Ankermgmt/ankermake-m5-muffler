@@ -15,6 +15,7 @@ state_machine:
               green: 100%
               blue: 0%
               brightness: 1.0
+              effect: None
       - name: SILENCED
         on_enter:
           - logger.log: "Fan is turned on"
@@ -24,17 +25,28 @@ state_machine:
               green: 0%
               blue: 100%
               brightness: 1.0
+              effect: None
       - name: ERROR
         on_enter:
           - logger.log: "Fan is in error state"
           - light.turn_on:
               id: fastled_light
               effect: Flashing Red
-      # - "NORMAL"
-      # - "SILENCED"
-      # - "ERROR"
-      # - "TURBO"
-      # - "PARTY"
+      - name: TURBO
+        on_enter:
+          - logger.log: "Fan is in turbo mode"
+          - light.turn_on:
+              id: fastled_light
+              effect: Breathing Effect
+      - name: PARTY
+        on_enter:
+          - logger.log: "Fan is in party mode"
+          - light.turn_on:
+              id: fastled_light
+              red: 0%
+              green: 50%
+              blue: 100%
+              effect: Scanning color"
     initial_state: "NORMAL" #TODO: should we default to error? or normal?
     id: state_machine_mode
     inputs:
