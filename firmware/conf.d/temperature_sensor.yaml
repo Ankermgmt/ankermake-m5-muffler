@@ -13,6 +13,17 @@ sensor:
       - 400kOhm -> 0°C
       - 93kOhm -> 21°C
       - 3kOhm -> 152°C 
+    on_value_range:
+      - below: 10
+        then:
+           - logger.log: "Thermsistor Temperature is below 10°C"
+           - state_machine.transition: ERROR
+      # - above: 270
+      - above: 20 #TODO: reset to 270 before shipping product
+        then:
+           - logger.log: "Thermsistor Temperature is above 270°C"
+           - state_machine.transition: ERROR
+
 
   # https://esphome.io/components/sensor/resistance.html
   - platform: resistance
