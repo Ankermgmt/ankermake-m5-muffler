@@ -26,7 +26,15 @@ Run the `make run` command to upload the firmware and start the device:
 
 ```bash
 export USB_ADDRESS=/dev/cu.wchusbserialXXXX
-make run
+# Make sure to uncomment the wifi settings in common.yaml
+make run-usb
+# Delete or comment out the wifi settings in common.yaml
+```
+
+Once the device is joined to the wifi, you can do subsuiqnet uploads using the `run-ota` make command. No usb cable required
+
+```bash
+make run-ota
 ```
 
 Once done uploading, you may need to press the reset button on the device to start the firmware.
@@ -53,6 +61,8 @@ See the [Makefile](Makefile) for all available commands.
 - run
 - logs
 - dashboard
+- run-usb
+- run-ota
 
 
 ## Troublshooting

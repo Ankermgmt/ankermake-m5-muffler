@@ -17,9 +17,21 @@ logs:
 	esphome logs config.yaml --device $(USB_ADDRESS)
 dashboard:
 	esphome dashboard . --open-ui --address 127.0.0.1 --port 6053
-run:
+run-usb:
+	# run-usb is used for the first time a device is setup 
+	# uncomment the wifi section in config.yaml
+	# then put the device into DFU mode (button pressed -> reset -> button release)
+	# you can then run the run-ota command which will preserve the wifi settings
+	# this is a workaround until eshome supports improv_serial on esp32s2
 	esphome \
 		-s name ankermake-m5-muffler \
 		-s friendly_name "AnkerMake M5 Muffler" \
 		-s ntc_resistance "100kOhm" \
 		run config.yaml --device $(USB_ADDRESS)
+run-ota:
+	# run-ota is used for subsequent uploads after the device has been joined to the wifi network
+	esphome \
+		-s name ankermake-m5-muffler \
+		-s friendly_name "AnkerMake M5 Muffler" \
+		-s ntc_resistance "100kOhm" \
+		run config.yaml

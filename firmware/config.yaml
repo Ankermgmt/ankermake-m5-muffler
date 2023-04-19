@@ -19,6 +19,8 @@ esphome:
 # Leaveing on the arduino framework for now
 # The advantage of esp-idf is it may have better support for CDC boot mode allowing
 # for improv_serial to work (currently does not work in arduino framework)
+# https://community.home-assistant.io/t/enable-usb-cdc-to-log-hello-world-to-esp32-s3-dev-board-for-esphome/463164/12
+# https://github.com/esphome/esphome/pull/4225/files
 esp32:
   board: lolin_s2_mini
   variant: esp32s2
@@ -42,8 +44,10 @@ dashboard_import:
   package_import_url: github://Ankermgmt/ankermake-m5-muffler/ESPHome/config.yaml@main
   import_full_config: false # or true
 
-# Sets up the improv via serial client for Wi-Fi provisioning
-improv_serial:
+# esp32s2 does not yet support USB CDC, which means a serial port
+# only appears when in DFU mode (not when plugged into a computer normally)
+# Until USB CDC is supported on the esp32s2, improv_serial will not work
+# improv_serial:
   # next_url: https://example.com/project-template/manual?ip={{ip_address}}&name={{device_name}}&version={{esphome_version}}
 
 packages:
@@ -63,3 +67,9 @@ packages:
   wifi: !include conf.d/wifi.yaml
   web_server: !include conf.d/web_server.yaml
 
+# Uncomment this for development
+# Note: Peforming subsequent uploads using the OTA will preserve the wifi settings
+# Making having to enter the wifi credentials every time unnecessary
+# wifi:
+#   ssid: !secret wifi_ssid
+#   password: !secret wifi_password
