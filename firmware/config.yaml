@@ -2,6 +2,7 @@ substitutions:
   name: ankermake-m5-muffler
   friendly_name: AnkerMake M5 Muffler
   ntc_resistance: 100kOhm # 10kOhm, 50kOhm, 100kOhm are common values. R1 resistor must match this value
+  rgb_order: GRB # RGB, GRB, BGR, BRG, GBR, RGBW, GRBW
 
 esphome:
   name: ${name}

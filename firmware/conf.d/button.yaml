@@ -9,10 +9,10 @@ binary_sensor:
     name: "Button"
     on_press:
       then:
+        - logger.log: "Fan Button Pressed"
         - state_machine.transition: TOGGLE
-    on_release:
-      then:
-        - logger.log: "Fan Button Released"
-
+    # on_release:
+    #   then:
+    #     - logger.log: "Fan Button Released"
 #TODO: Implement touch sensors
 # https://github.com/esphome/issues/issues/4411#issuecomment-1509475981

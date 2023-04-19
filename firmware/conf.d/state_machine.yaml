@@ -6,15 +6,39 @@ external_components:
 state_machine:
   - name: Fan Mode
     states:
-    - "NORMAL"
-    - "SILENCED"
-    - "ERROR"
-    - "TURBO"
-    - "PARTY"
-    initial_state: NORMAL
+      - name: NORMAL
+        on_enter:
+          - logger.log: "Fan is turned off"
+          - light.turn_on:
+              id: fastled_light
+              red: 0%
+              green: 100%
+              blue: 0%
+              brightness: 1.0
+      - name: SILENCED
+        on_enter:
+          - logger.log: "Fan is turned on"
+          - light.turn_on:
+              id: fastled_light
+              red: 0%
+              green: 0%
+              blue: 100%
+              brightness: 1.0
+      - name: ERROR
+        on_enter:
+          - logger.log: "Fan is in error state"
+          - light.turn_on:
+              id: fastled_light
+              effect: Flashing Red
+      # - "NORMAL"
+      # - "SILENCED"
+      # - "ERROR"
+      # - "TURBO"
+      # - "PARTY"
+    initial_state: "NORMAL" #TODO: should we default to error? or normal?
     id: state_machine_mode
     inputs:
-      - name: TOGGLE
+      - name: "TOGGLE"
         transitions:
           - NORMAL -> SILENCED
           - SILENCED -> NORMAL
@@ -22,18 +46,17 @@ state_machine:
 text_sensor:
   - platform: state_machine
     name: Cooling Mode
+    id: state_machine_text
 
-# This is the real magic of the muffler
-# Check every x seconds to verify that all conditions are met to silence the fan
-# If they are, then silence the fan
-# If they are not, then turn the fan back full blast
-#TODO: full testing
 # interval:
 #   - interval: 5s
 #     then:
-#       - lambda: |-
-#           if (id(state_machine_mode) == SILENCED && id(heater_state).state == "OFF") {
-#             echo("Silencing Fan");
-#           } else {
-#             echo("Disabling Fan Silence");
-#           }
+      # - lambda: |-
+      #     if (id(state_machine_text).state == "NORMAL") {
+      #       id(fastled_light).turn_on(
+      #         red=255,
+      #         green=0,
+      #         blue=0,
+      #         brightness=1.0
+      #       );
+      #     }
