@@ -8,13 +8,33 @@ esphome:
   friendly_name: ${friendly_name}
   platformio_options:
     board_build.extra_flags:
-      - "-DARDUINO_USB_CDC_ON_BOOT=0" #https://github.com/esphome/issues/issues/3988#issuecomment-1399025200
+      - "-DARDUINO_USB_CDC_ON_BOOT=0" # https://github.com/esphome/issues/issues/3988#issuecomment-1399025200
+  on_boot:
+    then:
+      - logger.log: "AnkerMake M5 Muffler Booting..."
 
+# There are 2 frameworks, arduino and esp-idf
+# esp-idf is recomended on the esp32s2 however it does not work with neopixel or fastled libraries
+# There is fastled-idf however integrating it with esphome is an unblazed trail
+# Leaveing on the arduino framework for now
+# The advantage of esp-idf is it may have better support for CDC boot mode allowing
+# for improv_serial to work (currently does not work in arduino framework)
 esp32:
   board: lolin_s2_mini
   variant: esp32s2
+  framework:
+    type: arduino
+    version: 2.0.7 # https://github.com/espressif/arduino-esp32/releases
+    platform_version: 6.1.0 # https://github.com/platformio/platform-espressif32/releases/
+  # framework:
+  #   type: esp-idf
+  #   version: 4.3.2
+  #   sdkconfig_options:
+  #     CONFIG_ESP_CONSOLE_USB_CDC: y
 
 logger:
+  hardware_uart: UART0
+  # hardware_uart: USB_CDC
 api:
 ota:
 
@@ -22,22 +42,24 @@ dashboard_import:
   package_import_url: github://Ankermgmt/ankermake-m5-muffler/ESPHome/config.yaml@main
   import_full_config: false # or true
 
-wifi: 
-  output_power: 10 # https://github.com/esphome/issues/issues/3988#issuecomment-1449954758
-  ap:
-
 # Sets up the improv via serial client for Wi-Fi provisioning
 improv_serial:
   # next_url: https://example.com/project-template/manual?ip={{ip_address}}&name={{device_name}}&version={{esphome_version}}
 
-<<: !include conf.d/accelerometer.yaml
-<<: !include conf.d/ambient_temperature.yaml
-<<: !include conf.d/button.yaml
-<<: !include conf.d/fan_input.yaml
-<<: !include conf.d/fan_output.yaml
-<<: !include conf.d/leds.yaml
-<<: !include conf.d/state_machine.yaml
-<<: !include conf.d/status_led.yaml
-<<: !include conf.d/temperature_sensor.yaml
-<<: !include conf.d/uart.yaml
-<<: !include conf.d/voltage_sensor.yaml
+packages:
+  accelerometer: !include conf.d/accelerometer.yaml
+  ambient_temperature: !include conf.d/ambient_temperature.yaml
+  button: !include conf.d/button.yaml
+  fan_input: !include conf.d/fan_input.yaml
+  fan_output: !include conf.d/fan_output.yaml
+  # leds-neopixel: !include conf.d/leds-neopixel.yaml
+  leds-fastled: !include conf.d/leds-fastled.yaml
+  state_machine: !include conf.d/state_machine.yaml
+  status_led: !include conf.d/status_led.yaml
+  temperature_sensor: !include conf.d/temperature_sensor.yaml
+  uart: !include conf.d/uart.yaml
+  uptime: !include conf.d/uptime.yaml
+  voltage_sensor: !include conf.d/voltage_sensor.yaml
+  wifi: !include conf.d/wifi.yaml
+  web_server: !include conf.d/web_server.yaml
+

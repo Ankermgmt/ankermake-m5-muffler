@@ -1,0 +1,12 @@
+light:
+  - platform: neopixelbus
+    variant: ws2812
+    id: leds
+    num_leds: 12
+    pin: 3
+    # Some reports say RMT is faster
+    # Others say SPI is faster
+    # TODO: Test performance
+    # https://blog.ja-ke.tech/2019/06/02/neopixel-performance.html
+    method:
+      type: esp32_rmt

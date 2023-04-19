@@ -18,4 +18,8 @@ logs:
 dashboard:
 	esphome dashboard . --open-ui --address 127.0.0.1 --port 6053
 run:
-	esphome run config.yaml --device $(USB_ADDRESS)
+	esphome \
+		-s name ankermake-m5-muffler \
+		-s friendly_name "AnkerMake M5 Muffler" \
+		-s ntc_resistance "100kOhm" \
+		run config.yaml --device $(USB_ADDRESS)

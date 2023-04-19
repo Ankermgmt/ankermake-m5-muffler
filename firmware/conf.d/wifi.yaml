@@ -1,0 +1,4 @@
+wifi: 
+  output_power: 10 # https://github.com/esphome/issues/issues/3988#issuecomment-1449954758
+  ap:
+    ssid: "AnkerMake M5 Muffler"
