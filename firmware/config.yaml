@@ -58,6 +58,7 @@ packages:
   accelerometer: !include conf.d/accelerometer.yaml
   ambient_temperature: !include conf.d/ambient_temperature.yaml
   button: !include conf.d/button.yaml
+  error_handler: !include conf.d/error_handler.yaml
   fan_input: !include conf.d/fan_input.yaml
   fan_output: !include conf.d/fan_output.yaml
   # leds-neopixel: !include conf.d/leds-neopixel.yaml

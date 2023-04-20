@@ -24,7 +24,6 @@ sensor:
            - logger.log: "Thermsistor Temperature is above 270°C"
            - state_machine.transition: ERROR
 
-
   # https://esphome.io/components/sensor/resistance.html
   - platform: resistance
     id: resistance_sensor
@@ -34,8 +33,6 @@ sensor:
     name: Thermsistor Resistance
     unit_of_measurement: 'Ω'
     accuracy_decimals: 0
-    # filters:
-    #   - multiply: 0.001 #This is the problem it fixes the gui, but breaks the maths
 
   - platform: adc
     id: source_sensor
