@@ -16,6 +16,42 @@ esphome:
       - logger.log: "AnkerMake M5 Muffler Booting..."
       - delay: 5s
       - state_machine.set: NORMAL #TODO: would a READY state be better?
+  on_loop:
+    then:
+      lambda: |-
+        float ntc_temp = id(ntc_sensor).state;
+        bool is_error = false;
+        bool is_safe_for_silence = false;
+        if ( ntc_temp < 10 ) {
+          is_error = true;
+        }
+        if ( ntc_temp > 260 ) {
+          is_error = true;
+        }
+        if ( ntc_temp > 10 && ntc_temp < 30) {
+          is_safe_for_silence = true;
+        }
+        if (is_error) {
+          if (id(state_machine_mode).current_state() != "ERROR") {
+            id(state_machine_mode).transition("ERROR_ENTER");
+          }
+        } else {
+          if(id(state_machine_mode).current_state() != "BOOTING") {
+            if (id(state_machine_mode).current_state() == "ERROR") {
+              if (id(previous_state) == "NORMAL") {
+                id(state_machine_mode).transition("ERROR2NORMAL");
+              } else if (id(previous_state) == "SILENCED") {
+                id(state_machine_mode).transition("ERROR2SILENCED");
+              }
+            }
+            if (is_safe_for_silence) {
+              // If we are not in user override mode, then switch to silenced mode automatically
+              id(state_machine_mode).set("SILENCED");
+            } else {
+              id(state_machine_mode).set("NORMAL");
+            }
+          }
+        }
 
 
 # There are 2 frameworks, arduino and esp-idf
@@ -59,7 +95,6 @@ packages:
   accelerometer: !include conf.d/accelerometer.yaml
   ambient_temperature: !include conf.d/ambient_temperature.yaml
   button: !include conf.d/button.yaml
-  error_handler: !include conf.d/error_handler.yaml
   fan_input: !include conf.d/fan_input.yaml
   fan_output: !include conf.d/fan_output.yaml
   # leds-neopixel: !include conf.d/leds-neopixel.yaml
