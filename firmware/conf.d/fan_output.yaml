@@ -4,14 +4,17 @@ output:
   - platform: ledc
     pin: 39
     frequency: 20kHz
-    id: hotend_fan
+    id: hotend_fan_output
 
 fan:
   - platform: speed
-    output: hotend_fan
-    name: "Heatsink Fan"
+    output: hotend_fan_output
+    name: "Hotend Fan"
+    id: hotend_fan
     disabled_by_default: false
-    internal: false #TODO: make internal, unless we want people to override the speed manually (dangerous)
+    restore_mode: NO_RESTORE #TODO: ALWAYS_ON
+    # internal: false #TODO: make internal, unless we want people to override the speed manually (dangerous)
+    internal: true
     #oscillation_output: hotend_fan #TODO: not working
     speed_count: 100 #TODO: do we need granular speed access, or is off/medium/high enough?
     # speed:

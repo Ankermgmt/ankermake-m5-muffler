@@ -73,9 +73,7 @@ packages:
   wifi: !include conf.d/wifi.yaml
   web_server: !include conf.d/web_server.yaml
 
-# Uncomment this for development
-# Note: Peforming subsequent uploads using the OTA will preserve the wifi settings
-# Making having to enter the wifi credentials every time unnecessary
-# wifi:
-#   ssid: !secret wifi_ssid
-#   password: !secret wifi_password
+  # Uncomment this for development
+  # Note: Peforming subsequent uploads using the OTA will preserve the wifi settings
+  # Making having to enter the wifi credentials every time unnecessary
+  debug: !include conf.d/debug.yaml

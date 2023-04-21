@@ -1,16 +1,25 @@
+# error_handler is the main loop that checks for errors and transitions the state machine
+# It runs every few milliseconds
+# Checks temperature > 10 degrees C and < 260 degrees C
+# Checks if safe to put printer into silent mode ( > 10 degrees C and < 30 degrees C)
 binary_sensor:
   - platform: template
     device_class: safety #or problem
+    # TODO: this returns 'on', 'off', is there way to return danger in gui? 
     id: error_handler
     name: "Error Handler"
     lambda: |-
       float ntc_temp = id(ntc_sensor).state;
       bool is_error = false;
+      bool is_safe_for_silence = false;
       if ( ntc_temp < 10 ) {
         is_error = true;
       }
       if ( ntc_temp > 260 ) {
         is_error = true;
+      }
+      if ( ntc_temp > 10 && ntc_temp < 30) {
+        is_safe_for_silence = true;
       }
       if (is_error) {
         if (id(state_machine_mode).current_state() != "ERROR") {
@@ -23,6 +32,12 @@ binary_sensor:
           } else if (id(previous_state) == "SILENCED") {
             id(state_machine_mode).transition("ERROR2SILENCED");
           }
+        }
+        if (is_safe_for_silence) {
+          // If we are not in user override mode, then switch to silenced mode automatically
+          id(state_machine_mode).set("SILENCED");
+        } else {
+          id(state_machine_mode).set("NORMAL");
         }
       }
       return is_error;

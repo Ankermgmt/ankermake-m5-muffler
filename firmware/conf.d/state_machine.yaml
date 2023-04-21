@@ -4,6 +4,9 @@ external_components:
       url: https://github.com/muxa/esphome-state-machine
 
 globals:
+  # previous_state is used to decide the code path when leaving ERROR state
+  # If ERROR state was entered from SILENCE then exit back out to SILENCE
+  # If ERROR state was entered from NORMAL then exit back out to NORMAL
   - id: previous_state
     type: std::string
     restore_value: no
@@ -35,6 +38,19 @@ state_machine:
               brightness: 1.0
               effect: None
       - name: SILENCED
+        on_set:
+          - logger.log: "Silenced State"
+          - light.turn_on:
+              id: fastled_light
+              red: 0%
+              green: 0%
+              blue: 100%
+              brightness: 1.0
+              effect: None
+          - fan.turn_on:
+              id: hotend_fan
+              speed: 1
+              #TODO: better to turn fan off completely? 
         on_enter:
           - logger.log: "Silenced State"
           - light.turn_on:
@@ -44,6 +60,10 @@ state_machine:
               blue: 100%
               brightness: 1.0
               effect: None
+          - fan.turn_on:
+              id: hotend_fan
+              speed: 1
+              #TODO: better to turn fan off completely? 
       - name: ERROR
         on_set:
           - logger.log: 
@@ -52,6 +72,9 @@ state_machine:
           - light.turn_on:
               id: fastled_light
               effect: Flashing Red
+          - fan.turn_on:
+              id: hotend_fan
+              speed: 100 #TODO: 80% is probably better
         on_enter:
           - logger.log: 
               format: "Entering Error State"
@@ -59,6 +82,9 @@ state_machine:
           - light.turn_on:
               id: fastled_light
               effect: Flashing Red
+          - fan.turn_on:
+              id: hotend_fan
+              speed: 100 #TODO: 80% is probably better
         on_leave:
           - logger.log:
               format: "Error Cleared"
@@ -66,8 +92,6 @@ state_machine:
           - lambda: |-
               id(previous_state) = "CLEARED";
               ESP_LOGW("Error State", "Previous State: %s", id(previous_state).c_str());
-          # TODO: set fans to 100%
-          # TODO: Change from flashing red to a unique pattern
       - name: BOOTING
         on_set:
           - logger.log: "Fan is booting"
@@ -88,18 +112,17 @@ state_machine:
             before_transition:
               - lambda: |-
                   id(previous_state) = "NORMAL";
-                  ESP_LOGW("Error State", "Previous State: %s", id(previous_state).c_str());
+                  ESP_LOGW("Saving prevous error State", "Previous State: %s", id(previous_state).c_str());
           - from: SILENCED
             to: ERROR
             before_transition:
               - lambda: |-
                   id(previous_state) = "SILENCED";
-                  ESP_LOGW("Error State", "Previous State: %s", id(previous_state).c_str());
+                  ESP_LOGW("Saving prevous error State", "Previous State: %s", id(previous_state).c_str());
       - name: "ERROR_EXIT" 
         transitions:
           - ERROR -> NORMAL
           - ERROR -> SILENCED
-          # - ERROR -> BOOTING
       - name: "ERROR2NORMAL"
         transitions:
           - ERROR -> NORMAL
@@ -107,6 +130,7 @@ state_machine:
         transitions:
           - ERROR -> SILENCED
 
+# Show the state machine in the esphome dashboard
 text_sensor:
   - platform: state_machine
     name: Cooling Mode
