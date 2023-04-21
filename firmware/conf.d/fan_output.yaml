@@ -44,7 +44,7 @@ fan:
     id: hotend_fan
     disabled_by_default: false
     restore_mode: NO_RESTORE #TODO: ALWAYS_ON
-    internal: false #TODO: set to true before shipping, or make dynamic
+    internal: true #TODO: set to true before shipping, or make dynamic
     speed_count: 100
     on_speed_set:
       then:

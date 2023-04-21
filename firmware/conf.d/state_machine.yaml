@@ -28,6 +28,9 @@ state_machine:
               blue: 0%
               brightness: 1.0
               effect: None
+          - fan.turn_on:
+              id: hotend_fan
+              speed: 50 #TODO: Change this to pass through whatever the printer is giving us
         on_enter:
           - logger.log: "Normal State"
           - light.turn_on:
@@ -37,6 +40,9 @@ state_machine:
               blue: 0%
               brightness: 1.0
               effect: None
+          - fan.turn_on:
+              id: hotend_fan
+              speed: 50 #TODO: Change this to pass through whatever the printer is giving us
       - name: SILENCED
         on_set:
           - logger.log: "Silenced State"

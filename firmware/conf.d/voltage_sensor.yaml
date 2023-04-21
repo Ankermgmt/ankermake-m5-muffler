@@ -12,13 +12,3 @@ binary_sensor:
     filters:
       - invert:
 
-text_sensor:
-  - platform: template
-    name: "Heater State"
-    id: heater_state
-    # lambda: |-
-    #   if (id(heater).state) {
-    #     return "ON";
-    #   } else {
-    #     return "OFF";
-    #   }

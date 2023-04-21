@@ -20,6 +20,7 @@ esphome:
     then:
       lambda: |-
         float ntc_temp = id(ntc_sensor).state;
+        bool heater_on = id(heater).state;
         bool is_error = false;
         bool is_safe_for_silence = false;
 
@@ -33,6 +34,10 @@ esphome:
 
         if (ntc_temp > 5 && ntc_temp < 30) {
           is_safe_for_silence = true;
+        }
+
+        if (heater_on) {
+          is_safe_for_silence = false;
         }
 
         if (is_error) {
