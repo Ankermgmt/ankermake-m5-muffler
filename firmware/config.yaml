@@ -15,7 +15,7 @@ esphome:
     then:
       - logger.log: "AnkerMake M5 Muffler Booting..."
       - delay: 5s
-      - state_machine.set: NORMAL
+      - state_machine.set: NORMAL #TODO: would a READY state be better?
 
 
 # There are 2 frameworks, arduino and esp-idf

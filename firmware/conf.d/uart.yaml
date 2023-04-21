@@ -1,8 +1,9 @@
-uart:
-  id: uart_1
-  tx_pin: 29
-  rx_pin: 34
-  baud_rate: 115200
+#TODO: enabling this breaks everything
+# uart:
+#   id: uart_1
+#   tx_pin: 29
+#   rx_pin: 34
+#   baud_rate: 115200
 
 # TODO: research if USB CDC is supported here
 # https://discord.com/channels/429907082951524364/429907082955718657/1098106699413463082

@@ -26,18 +26,20 @@ binary_sensor:
           id(state_machine_mode).transition("ERROR_ENTER");
         }
       } else {
-        if (id(state_machine_mode).current_state() == "ERROR") {
-          if (id(previous_state) == "NORMAL") {
-            id(state_machine_mode).transition("ERROR2NORMAL");
-          } else if (id(previous_state) == "SILENCED") {
-            id(state_machine_mode).transition("ERROR2SILENCED");
+        if(id(state_machine_mode).current_state() != "BOOTING") {
+          if (id(state_machine_mode).current_state() == "ERROR") {
+            if (id(previous_state) == "NORMAL") {
+              id(state_machine_mode).transition("ERROR2NORMAL");
+            } else if (id(previous_state) == "SILENCED") {
+              id(state_machine_mode).transition("ERROR2SILENCED");
+            }
           }
-        }
-        if (is_safe_for_silence) {
-          // If we are not in user override mode, then switch to silenced mode automatically
-          id(state_machine_mode).set("SILENCED");
-        } else {
-          id(state_machine_mode).set("NORMAL");
+          if (is_safe_for_silence) {
+            // If we are not in user override mode, then switch to silenced mode automatically
+            id(state_machine_mode).set("SILENCED");
+          } else {
+            id(state_machine_mode).set("NORMAL");
+          }
         }
       }
       return is_error;
