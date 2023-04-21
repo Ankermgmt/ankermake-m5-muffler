@@ -22,21 +22,25 @@ esphome:
         float ntc_temp = id(ntc_sensor).state;
         bool is_error = false;
         bool is_safe_for_silence = false;
-        if ( ntc_temp < 10 ) {
+
+        if (ntc_temp < 5) {
           is_error = true;
         }
-        if ( ntc_temp > 260 ) {
+
+        if (ntc_temp > 260) {
           is_error = true;
         }
-        if ( ntc_temp > 5 && ntc_temp < 30) {
+
+        if (ntc_temp > 5 && ntc_temp < 30) {
           is_safe_for_silence = true;
         }
+
         if (is_error) {
           if (id(state_machine_mode).current_state() != "ERROR") {
             id(state_machine_mode).transition("ERROR_ENTER");
           }
         } else {
-          if(id(state_machine_mode).current_state() != "BOOTING") {
+          if (id(state_machine_mode).current_state() != "BOOTING") {
             if (id(state_machine_mode).current_state() == "ERROR") {
               if (id(previous_state) == "NORMAL") {
                 id(state_machine_mode).transition("ERROR2NORMAL");
@@ -44,6 +48,7 @@ esphome:
                 id(state_machine_mode).transition("ERROR2SILENCED");
               }
             }
+
             if (is_safe_for_silence) {
               // If we are not in user override mode, then switch to silenced mode automatically
               id(state_machine_mode).set("SILENCED");
@@ -52,6 +57,7 @@ esphome:
             }
           }
         }
+
 
 
 # There are 2 frameworks, arduino and esp-idf
@@ -79,6 +85,7 @@ logger:
   hardware_uart: UART0
   # hardware_uart: USB_CDC
 api:
+  reboot_timeout: 0s
 ota:
 
 dashboard_import:

@@ -10,7 +10,7 @@ binary_sensor:
     on_press:
       then:
         - logger.log: "Fan Button Pressed"
-        - state_machine.transition: TOGGLE
+        - state_machine.transition: TOGGLE #TODO: refactor since this no longer works with auto detection
 
 #TODO: Implement touch sensors
 # https://github.com/esphome/issues/issues/4411#issuecomment-1509475981

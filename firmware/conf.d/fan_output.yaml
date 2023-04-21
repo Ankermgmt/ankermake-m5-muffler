@@ -13,8 +13,8 @@ fan:
     id: hotend_fan
     disabled_by_default: false
     restore_mode: NO_RESTORE #TODO: ALWAYS_ON
-    # internal: false #TODO: make internal, unless we want people to override the speed manually (dangerous)
-    internal: true
+    internal: false #TODO: make internal, unless we want people to override the speed manually (dangerous)
+    # internal: true
     #oscillation_output: hotend_fan #TODO: not working
     speed_count: 100 #TODO: do we need granular speed access, or is off/medium/high enough?
     # speed:
