@@ -28,7 +28,7 @@ esphome:
         if ( ntc_temp > 260 ) {
           is_error = true;
         }
-        if ( ntc_temp > 10 && ntc_temp < 30) {
+        if ( ntc_temp > 5 && ntc_temp < 30) {
           is_safe_for_silence = true;
         }
         if (is_error) {
@@ -57,7 +57,7 @@ esphome:
 # There are 2 frameworks, arduino and esp-idf
 # esp-idf is recomended on the esp32s2 however it does not work with neopixel or fastled libraries
 # There is fastled-idf however integrating it with esphome is an unblazed trail
-# Leaveing on the arduino framework for now
+# Leaving on the arduino framework for now
 # The advantage of esp-idf is it may have better support for CDC boot mode allowing
 # for improv_serial to work (currently does not work in arduino framework)
 # https://community.home-assistant.io/t/enable-usb-cdc-to-log-hello-world-to-esp32-s3-dev-board-for-esphome/463164/12
