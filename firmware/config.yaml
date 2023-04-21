@@ -2,6 +2,7 @@ substitutions:
   name: ankermake-m5-muffler
   friendly_name: AnkerMake M5 Muffler
   ntc_resistance: 100kOhm # 10kOhm, 50kOhm, 100kOhm are common values. R1 resistor must match this value
+  log_level: INFO # DEBUG, INFO, WARNING, ERROR, NONE
   rgb_order: GRB # RGB, GRB, BGR, BRG, GBR, RGBW, GRBW
 
 esphome:
@@ -15,7 +16,7 @@ esphome:
       - logger.log: "AnkerMake M5 Muffler Booting..."
       - delay: 5s
       - state_machine.set: NORMAL
-      # TODO: perform check of all sensors
+
 
 # There are 2 frameworks, arduino and esp-idf
 # esp-idf is recomended on the esp32s2 however it does not work with neopixel or fastled libraries
@@ -75,6 +76,6 @@ packages:
 # Uncomment this for development
 # Note: Peforming subsequent uploads using the OTA will preserve the wifi settings
 # Making having to enter the wifi credentials every time unnecessary
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
+# wifi:
+#   ssid: !secret wifi_ssid
+#   password: !secret wifi_password

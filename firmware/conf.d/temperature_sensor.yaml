@@ -8,21 +8,12 @@
 sensor:
   - platform: ntc
     name: Thermsistor Temperature
+    id: ntc_sensor
     sensor: resistance_sensor
     calibration:
-      - 400kOhm -> 0°C
-      - 93kOhm -> 21°C
-      - 3kOhm -> 152°C 
-    on_value_range:
-      - below: 10
-        then:
-           - logger.log: "Thermsistor Temperature is below 10°C"
-           - state_machine.transition: ERROR
-      # - above: 270
-      - above: 20 #TODO: reset to 270 before shipping product
-        then:
-           - logger.log: "Thermsistor Temperature is above 270°C"
-           - state_machine.transition: ERROR
+      - 400kOhm -> 0.0°C
+      - 93kOhm -> 21.0°C
+      - 3kOhm -> 152.0°C
 
   # https://esphome.io/components/sensor/resistance.html
   - platform: resistance
@@ -41,9 +32,6 @@ sensor:
     # https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32s2/api-reference/peripherals/adc.html
     # https://esphome.io/components/sensor/adc.html#esp32-attenuation
     attenuation: 11db
-    # on_value:
-    #   then:
-    #     - component.update: analog_value
 
   - platform: template
     name: "Thermsistor Voltage"

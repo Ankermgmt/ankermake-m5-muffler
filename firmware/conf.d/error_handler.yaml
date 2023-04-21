@@ -9,22 +9,20 @@ binary_sensor:
       if ( ntc_temp < 10 ) {
         is_error = true;
       }
-      if ( ntc_temp > 20 ) {
+      if ( ntc_temp > 260 ) {
         is_error = true;
       }
       if (is_error) {
         if (id(state_machine_mode).current_state() != "ERROR") {
-          //if (previous_state->value() != "NORMAL" || previous_state->value() != "SILENCED") {
-          //  id(previous_state) = id(state_machine_mode).current_state();
-          //}
-          //if (id(previous_state) != "NORMAL" ) {
-          //}
           id(state_machine_mode).transition("ERROR_ENTER");
         }
       } else {
         if (id(state_machine_mode).current_state() == "ERROR") {
-          //TODO testing comments
-          id(state_machine_mode).transition("ERROR2NORMAL");
+          if (id(previous_state) == "NORMAL") {
+            id(state_machine_mode).transition("ERROR2NORMAL");
+          } else if (id(previous_state) == "SILENCED") {
+            id(state_machine_mode).transition("ERROR2SILENCED");
+          }
         }
       }
       return is_error;

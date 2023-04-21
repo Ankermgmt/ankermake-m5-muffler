@@ -6,7 +6,6 @@ external_components:
 globals:
   - id: previous_state
     type: std::string
-    # type: esphome::globals::GlobalsComponent<std::string>
     restore_value: no
     initial_value: '"BOOTING"'
 
@@ -60,13 +59,10 @@ state_machine:
           - light.turn_on:
               id: fastled_light
               effect: Flashing Red
-          - lambda: |-
-              id(previous_state) = id(state_machine_mode).current_state();
-              ESP_LOGW("Error State", "Previous State: %s", id(previous_state).c_str());
         on_leave:
           - logger.log:
               format: "Error Cleared"
-              level: WARN #TODO: remove from warn
+              level: WARN
           - lambda: |-
               id(previous_state) = "CLEARED";
               ESP_LOGW("Error State", "Previous State: %s", id(previous_state).c_str());
@@ -87,9 +83,18 @@ state_machine:
           - SILENCED -> NORMAL
       - name: "ERROR_ENTER"
         transitions:
-          - NORMAL -> ERROR
-          - SILENCED -> ERROR
-          - BOOTING -> ERROR
+          - from: NORMAL
+            to: ERROR
+            before_transition:
+              - lambda: |-
+                  id(previous_state) = "NORMAL";
+                  ESP_LOGW("Error State", "Previous State: %s", id(previous_state).c_str());
+          - from: SILENCED
+            to: ERROR
+            before_transition:
+              - lambda: |-
+                  id(previous_state) = "SILENCED";
+                  ESP_LOGW("Error State", "Previous State: %s", id(previous_state).c_str());
       - name: "ERROR_EXIT" 
         transitions:
           - ERROR -> NORMAL
@@ -106,43 +111,3 @@ text_sensor:
   - platform: state_machine
     name: Cooling Mode
     id: state_machine_text
-
-# script:
-#   - id: validation
-#     then: 
-#       # Check if the temperature is too high
-#       - if:
-#           condition:
-#             lambda: |-
-#               return (id(resistance_sensor).state > 20);
-#           then:
-#             - light.turn_on:
-#                 id: fastled_light
-#                 effect: Flashing Red
-#       # Check if the temperature is too low
-#       - if:
-#           condition:
-#             lambda: |-
-#               return (id(resistance_sensor).state < 10);
-#           then:
-#             - light.turn_on:
-#                 id: fastled_light
-#                 effect: Flashing Red
-#       # Check if the voltage is too high
-#       # Check if the voltage is too low
-#       # Check if PWM signal is not 20hz
-
-
-
-# interval:
-#   - interval: 5s
-#     then:
-      # - lambda: |-
-      #     if (id(state_machine_text).state == "NORMAL") {
-      #       id(fastled_light).turn_on(
-      #         red=255,
-      #         green=0,
-      #         blue=0,
-      #         brightness=1.0
-      #       );
-      #     }
