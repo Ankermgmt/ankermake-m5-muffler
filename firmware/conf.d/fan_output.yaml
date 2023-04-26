@@ -10,7 +10,7 @@ switch:
   - platform: gpio
     pin: 
       number: 6
-      inverted: true #TODO: test inverted
+      inverted: false
       # mode: INPUT_PULLUP #TODO: verify pullup and not pulldown
     id: hotend_fan_switch
     on_turn_on:
