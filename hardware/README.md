@@ -39,3 +39,12 @@ We can then export a .SES file from FreeRouting and import it back into EasyEDA.
 6. FreeRouting - Click in the main window to pause autorouting (or else export will fail)
 7. FreeRouting -> File -> Export Spectra Session file
 8. EasyEDA -> Route -> Import Spectra Session file
+
+
+
+### Fonts
+
+The font used by AnkerMake is either "Poppins SemiBold" or "Poppins Bold". [Download font](https://befonts.com/poppins-font-family.html)
+
+1. Import the font into your system font manager
+2. In easyEDA, import the font from the system font manager
