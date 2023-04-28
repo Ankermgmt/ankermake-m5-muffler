@@ -62,21 +62,20 @@ esphome:
             }
           }
         }
-  includes:
-    - pwm_duty_cycle_sensor.h
-    # - foobar.h
-    - custom_text_output.h
+  # includes:
+  #   - pwm_duty_cycle_sensor.h
+  #   - custom_text_output.h
 
 
-custom_component:
-  - lambda: |-
-      auto pwm_duty_cycle_sensor = new PwmDutyCycleSensor();
-      pwm_duty_cycle_sensor->set_update_interval(1000); // Update interval in milliseconds
-      pwm_duty_cycle_sensor->set_pin(37); // GPIO pin number
-      App.register_component(pwm_duty_cycle_sensor);
-      return {pwm_duty_cycle_sensor};
-    components:
-      - id: foobar
+# custom_component:
+#   - lambda: |-
+#       auto pwm_duty_cycle_sensor = new PwmDutyCycleSensor();
+#       pwm_duty_cycle_sensor->set_update_interval(1000); // Update interval in milliseconds
+#       pwm_duty_cycle_sensor->set_pin(37); // GPIO pin number
+#       App.register_component(pwm_duty_cycle_sensor);
+#       return {pwm_duty_cycle_sensor};
+#     components:
+#       - id: pwm_sensor
 
 # There are 2 frameworks, arduino and esp-idf
 # esp-idf is recomended on the esp32s2 however it does not work with neopixel or fastled libraries
