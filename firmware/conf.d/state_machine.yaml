@@ -30,7 +30,9 @@ state_machine:
               effect: None
           - fan.turn_on:
               id: hotend_fan
-              speed: 50 #TODO: Change this to pass through whatever the printer is giving us
+              speed: !lambda |-
+                return int(round(id(duty_cycle_sensor).state));
+              #TODO: This only sets speed 1 time, move logic to external loop
         on_enter:
           - logger.log: "Normal State"
           - light.turn_on:
@@ -42,7 +44,8 @@ state_machine:
               effect: None
           - fan.turn_on:
               id: hotend_fan
-              speed: 50 #TODO: Change this to pass through whatever the printer is giving us
+              speed: !lambda |-
+                return int(round(id(duty_cycle_sensor).state));
       - name: SILENCED
         on_set:
           - logger.log: "Silenced State"

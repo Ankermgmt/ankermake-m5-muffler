@@ -18,17 +18,14 @@ esphome:
       - state_machine.set: NORMAL #TODO: would a READY state be better?
   on_loop:
     then:
+      # TODO: validate fan duty cycle is within range
       lambda: |-
         float ntc_temp = id(ntc_sensor).state;
         bool heater_on = id(heater).state;
         bool is_error = false;
         bool is_safe_for_silence = false;
 
-        if (ntc_temp < 5) {
-          is_error = true;
-        }
-
-        if (ntc_temp > 260) {
+        if (ntc_temp < 5 || ntc_temp > 260) {
           is_error = true;
         }
 
@@ -62,20 +59,6 @@ esphome:
             }
           }
         }
-  # includes:
-  #   - pwm_duty_cycle_sensor.h
-  #   - custom_text_output.h
-
-
-# custom_component:
-#   - lambda: |-
-#       auto pwm_duty_cycle_sensor = new PwmDutyCycleSensor();
-#       pwm_duty_cycle_sensor->set_update_interval(1000); // Update interval in milliseconds
-#       pwm_duty_cycle_sensor->set_pin(37); // GPIO pin number
-#       App.register_component(pwm_duty_cycle_sensor);
-#       return {pwm_duty_cycle_sensor};
-#     components:
-#       - id: pwm_sensor
 
 # There are 2 frameworks, arduino and esp-idf
 # esp-idf is recomended on the esp32s2 however it does not work with neopixel or fastled libraries

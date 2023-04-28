@@ -24,6 +24,7 @@ sensor:
     name: Thermsistor Resistance
     unit_of_measurement: 'Ω'
     accuracy_decimals: 0
+    #TODO: If cable is unplugged, this still reads 351Kohm, would a pullup/down resistor prevent this? 
 
   - platform: adc
     id: source_sensor
