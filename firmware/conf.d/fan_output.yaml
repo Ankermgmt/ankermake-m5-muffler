@@ -11,7 +11,7 @@ switch:
     pin: 
       number: 6
       inverted: false
-      # mode: INPUT_PULLUP #TODO: verify pullup and not pulldown
+      mode: INPUT_PULLDOWN
     id: hotend_fan_switch
     on_turn_on:
       - text_sensor.template.publish:

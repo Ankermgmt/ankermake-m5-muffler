@@ -6,7 +6,7 @@ binary_sensor:
   - platform: gpio
     pin:
       number: 12
-      mode: INPUT_PULLUP # set the mode to INPUT_PULLUP or INPUT_PULLDOWN depending on your wiring
+      mode: INPUT_PULLUP
     name: "Heater"
     id: heater
     filters:

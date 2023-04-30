@@ -6,7 +6,7 @@ The PCB is designed using a variety of tools. With the spirit of open hardware, 
 
 - FreeCad [Download](https://www.freecadweb.org/downloads.php)
 - Java (Required for FreeRouting) [Download](https://adoptium.net/temurin/releases/)
-- Free Routing [Download](https://github.com/freerouting/freerouting/releases/tag/v1.7.0)
+- Free Routing [Download](https://github.com/freerouting/freerouting/releases)
 - EasyEDA [Download](https://easyeda.com/page/download)
 - Fusion 360 (Optional)
 
@@ -28,7 +28,7 @@ To edit the PCB in Fusion360 and import into EasyEDA, first confert it to a DXF 
 ### Routing Traces
 
 Due to the unusual shape of the PCB, EasyEDA will always fail to route the traces with the built in autorouter. 
-We must export an Autorouter DSN file and use FreeRouting to route the traces.
+We must export an Autorouter DSN file and use [FreeRouting](https://github.com/freerouting/freerouting/releases) to route the traces.
 We can then export a .SES file from FreeRouting and import it back into EasyEDA.
 
 1. EasyEDA -> Autorouter -> Export DSN
