@@ -1,0 +1,712 @@
+
+(rules PCB Autorouter
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 46)
+    (layer_rule 1
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.8)
+    )
+    (layer_rule 2
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.6)
+    )
+  )
+  (rule
+    (width 1.004)
+    (clear 0.602)
+    (clear 0.502 (type smd_to_turn_gap))
+    (clear 0.598 (type THERMSISTOR-POWER))
+    (clear 0.786 (type HIGH-"CURRENT-"))
+    (clear 0.786 (type HIGH-CURRENT+))
+    (clear 0.786 (type LED-CONTROL5V))
+    (clear 0.786 (type LED-CONTROL))
+    (clear 0.786 (type U3-P2))
+    (clear 0.786 (type U21-3))
+    (clear 0.598 (type 3-U19))
+    (clear 0.598 (type 3-U20))
+    (clear 0.598 (type 3-U22))
+    (clear 0.786 (type ACCEL-INT))
+    (clear 0.786 (type U10-1))
+    (clear 0.598 (type 1-U9))
+    (clear 0.598 (type 1-R2))
+    (clear 0.598 (type 1-U11))
+    (clear 0.598 (type 1-U13))
+    (clear 0.598 (type 1-U15))
+    (clear 0.598 (type 1-U16))
+    (clear 0.598 (type 1-U17))
+    (clear 0.598 (type 1-U18))
+    (clear 0.598 (type 1-U19))
+    (clear 0.598 (type 1-U12))
+    (clear 0.598 (type 1-U14))
+    (clear 0.598 (type U5-4))
+    (clear 0.598 (type FAN-IN))
+    (clear 0.598 (type FAN-OUT))
+  )
+  (padstack via0
+    (shape
+      (circle 1 2.402 0.0 0.0)
+    )
+    (shape
+      (circle 2 2.402 0.0 0.0)
+    )
+  )
+  (via 
+    via0 via0 default
+  )
+  (via 
+    "via0-LED_CONTROL5V" via0 "LED_CONTROL5V"
+  )
+  (via 
+    "via0-THERMSISTOR" via0 THERMSISTOR
+  )
+  (via 
+    "via0-GND" via0 GND
+  )
+  (via 
+    "via0-+3.3V" via0 +3.3V
+  )
+  (via 
+    "via0-TOUCH1" via0 TOUCH1
+  )
+  (via 
+    "via0-TX" via0 TX
+  )
+  (via 
+    "via0-RX" via0 RX
+  )
+  (via 
+    "via0-+5V" via0 +5V
+  )
+  (via 
+    "via0-U3_P2" via0 "U3_P2"
+  )
+  (via 
+    "via0-+24V" via0 +24V
+  )
+  (via 
+    "via0-HIGH_CURRENT-" via0 "HIGH_CURRENT-"
+  )
+  (via 
+    "via0-U21_3" via0 "U21_3"
+  )
+  (via 
+    "via0-ACCEL_INT" via0 "ACCEL_INT"
+  )
+  (via 
+    "via0-LED_CONTROL" via0 "LED_CONTROL"
+  )
+  (via 
+    "via0-U10_1" via0 "U10_1"
+  )
+  (via 
+    "via0-HIGH_CURRENT+" via0 "HIGH_CURRENT+"
+  )
+  (via 
+    "via0-U9_1" via0 "U9_1"
+  )
+  (via 
+    "via0-R2_1" via0 "R2_1"
+  )
+  (via 
+    "via0-U11_1" via0 "U11_1"
+  )
+  (via 
+    "via0-U13_1" via0 "U13_1"
+  )
+  (via 
+    "via0-U15_1" via0 "U15_1"
+  )
+  (via 
+    "via0-U16_1" via0 "U16_1"
+  )
+  (via 
+    "via0-U17_1" via0 "U17_1"
+  )
+  (via 
+    "via0-U18_1" via0 "U18_1"
+  )
+  (via 
+    "via0-U19_1" via0 "U19_1"
+  )
+  (via 
+    "via0-U20_3" via0 "U20_3"
+  )
+  (via 
+    "via0-U5_4" via0 "U5_4"
+  )
+  (via 
+    "via0-TOUCH2" via0 TOUCH2
+  )
+  (via 
+    "via0-THERMSISTOR_POWER" via0 "THERMSISTOR_POWER"
+  )
+  (via 
+    "via0-SDA" via0 SDA
+  )
+  (via 
+    "via0-SCL" via0 SCL
+  )
+  (via 
+    "via0-FAN_IN" via0 "FAN_IN"
+  )
+  (via 
+    "via0-FAN_OUT" via0 "FAN_OUT"
+  )
+  (via 
+    "via0-U22_3" via0 "U22_3"
+  )
+  (via 
+    "via0-U12_1" via0 "U12_1"
+  )
+  (via 
+    "via0-U14_1" via0 "U14_1"
+  )
+  (via 
+    "via0-U19_3" via0 "U19_3"
+  )
+  (via_rule
+    default via0
+  )
+  (via_rule
+    "LED_CONTROL5V" "via0-LED_CONTROL5V"
+  )
+  (via_rule
+    THERMSISTOR "via0-THERMSISTOR"
+  )
+  (via_rule
+    GND "via0-GND"
+  )
+  (via_rule
+    +3.3V "via0-+3.3V"
+  )
+  (via_rule
+    TOUCH1 "via0-TOUCH1"
+  )
+  (via_rule
+    TX "via0-TX"
+  )
+  (via_rule
+    RX "via0-RX"
+  )
+  (via_rule
+    +5V "via0-+5V"
+  )
+  (via_rule
+    "U3_P2" "via0-U3_P2"
+  )
+  (via_rule
+    +24V "via0-+24V"
+  )
+  (via_rule
+    "HIGH_CURRENT-" "via0-HIGH_CURRENT-"
+  )
+  (via_rule
+    "U21_3" "via0-U21_3"
+  )
+  (via_rule
+    "ACCEL_INT" "via0-ACCEL_INT"
+  )
+  (via_rule
+    "LED_CONTROL" "via0-LED_CONTROL"
+  )
+  (via_rule
+    "U10_1" "via0-U10_1"
+  )
+  (via_rule
+    "HIGH_CURRENT+" "via0-HIGH_CURRENT+"
+  )
+  (via_rule
+    "U9_1" "via0-U9_1"
+  )
+  (via_rule
+    "R2_1" "via0-R2_1"
+  )
+  (via_rule
+    "U11_1" "via0-U11_1"
+  )
+  (via_rule
+    "U13_1" "via0-U13_1"
+  )
+  (via_rule
+    "U15_1" "via0-U15_1"
+  )
+  (via_rule
+    "U16_1" "via0-U16_1"
+  )
+  (via_rule
+    "U17_1" "via0-U17_1"
+  )
+  (via_rule
+    "U18_1" "via0-U18_1"
+  )
+  (via_rule
+    "U19_1" "via0-U19_1"
+  )
+  (via_rule
+    "U20_3" "via0-U20_3"
+  )
+  (via_rule
+    "U5_4" "via0-U5_4"
+  )
+  (via_rule
+    TOUCH2 "via0-TOUCH2"
+  )
+  (via_rule
+    "THERMSISTOR_POWER" "via0-THERMSISTOR_POWER"
+  )
+  (via_rule
+    SDA "via0-SDA"
+  )
+  (via_rule
+    SCL "via0-SCL"
+  )
+  (via_rule
+    "FAN_IN" "via0-FAN_IN"
+  )
+  (via_rule
+    "FAN_OUT" "via0-FAN_OUT"
+  )
+  (via_rule
+    "U22_3" "via0-U22_3"
+  )
+  (via_rule
+    "U12_1" "via0-U12_1"
+  )
+  (via_rule
+    "U14_1" "via0-U14_1"
+  )
+  (via_rule
+    "U19_3" "via0-U19_3"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 1.004)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "LED_CONTROL5V"
+    "LED_CONTROL5V"
+    (clearance_class "LED_CONTROL5V")
+    (via_rule "LED_CONTROL5V")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class THERMSISTOR
+    THERMSISTOR
+    (clearance_class THERMSISTOR)
+    (via_rule THERMSISTOR)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class GND
+    GND
+    (clearance_class GND)
+    (via_rule GND)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class +3.3V
+    +3.3V
+    (clearance_class +3.3V)
+    (via_rule +3.3V)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class TOUCH1
+    TOUCH1
+    (clearance_class TOUCH1)
+    (via_rule TOUCH1)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class TX
+    TX
+    (clearance_class TX)
+    (via_rule TX)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class RX
+    RX
+    (clearance_class RX)
+    (via_rule RX)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class +5V
+    +5V
+    (clearance_class +5V)
+    (via_rule +5V)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U3_P2"
+    "U3_P2"
+    (clearance_class "U3_P2")
+    (via_rule "U3_P2")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class +24V
+    +24V
+    (clearance_class +24V)
+    (via_rule +24V)
+    (rule
+      (width 1.182)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "HIGH_CURRENT-"
+    "HIGH_CURRENT-"
+    (clearance_class "HIGH_CURRENT-")
+    (via_rule "HIGH_CURRENT-")
+    (rule
+      (width 1.968)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U21_3"
+    "U21_3"
+    (clearance_class "U21_3")
+    (via_rule "U21_3")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "ACCEL_INT"
+    "ACCEL_INT"
+    (clearance_class "ACCEL_INT")
+    (via_rule "ACCEL_INT")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "LED_CONTROL"
+    "LED_CONTROL"
+    (clearance_class "LED_CONTROL")
+    (via_rule "LED_CONTROL")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U10_1"
+    "U10_1"
+    (clearance_class "U10_1")
+    (via_rule "U10_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "HIGH_CURRENT+"
+    "HIGH_CURRENT+"
+    (clearance_class "HIGH_CURRENT+")
+    (via_rule "HIGH_CURRENT+")
+    (rule
+      (width 1.968)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U9_1"
+    "U9_1"
+    (clearance_class "U9_1")
+    (via_rule "U9_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "R2_1"
+    "R2_1"
+    (clearance_class "R2_1")
+    (via_rule "R2_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U11_1"
+    "U11_1"
+    (clearance_class "U11_1")
+    (via_rule "U11_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U13_1"
+    "U13_1"
+    (clearance_class "U13_1")
+    (via_rule "U13_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U15_1"
+    "U15_1"
+    (clearance_class "U15_1")
+    (via_rule "U15_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U16_1"
+    "U16_1"
+    (clearance_class "U16_1")
+    (via_rule "U16_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U17_1"
+    "U17_1"
+    (clearance_class "U17_1")
+    (via_rule "U17_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U18_1"
+    "U18_1"
+    (clearance_class "U18_1")
+    (via_rule "U18_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U19_1"
+    "U19_1"
+    (clearance_class "U19_1")
+    (via_rule "U19_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U20_3"
+    "U20_3"
+    (clearance_class "U20_3")
+    (via_rule "U20_3")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U12_1"
+    "U12_1"
+    (clearance_class "U12_1")
+    (via_rule "U12_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U14_1"
+    "U14_1"
+    (clearance_class "U14_1")
+    (via_rule "U14_1")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U19_3"
+    "U19_3"
+    (clearance_class "U19_3")
+    (via_rule "U19_3")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U22_3"
+    "U22_3"
+    (clearance_class "U22_3")
+    (via_rule "U22_3")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class TOUCH2
+    TOUCH2
+    (clearance_class TOUCH2)
+    (via_rule TOUCH2)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "THERMSISTOR_POWER"
+    "THERMSISTOR_POWER"
+    (clearance_class "THERMSISTOR_POWER")
+    (via_rule "THERMSISTOR_POWER")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class SDA
+    SDA
+    (clearance_class SDA)
+    (via_rule SDA)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class SCL
+    SCL
+    (clearance_class SCL)
+    (via_rule SCL)
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "FAN_IN"
+    "FAN_IN"
+    (clearance_class "FAN_IN")
+    (via_rule "FAN_IN")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "FAN_OUT"
+    "FAN_OUT"
+    (clearance_class "FAN_OUT")
+    (via_rule "FAN_OUT")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+  (class "U5_4"
+    "U5_4"
+    (clearance_class "U5_4")
+    (via_rule "U5_4")
+    (rule
+      (width 1.0)
+    )
+    (circuit 
+      (use_layer 1 2)
+    )
+  )
+)
