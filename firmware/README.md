@@ -65,6 +65,20 @@ See the [Makefile](Makefile) for all available commands.
 - run-ota
 
 
+## Logic
+
+```mermaid
+
+graph TD
+    A[Start] -->|Get Hotend Temp<br/>Get Heater State| B{hotend temp < 5 or > 260}
+    B --> |yes|C{hotend temp >5 and < 30 }
+    B --> |no|D[ERROR]
+    C --> |no|F{heater on}
+    C --> |yes|G[NORMAL]
+    F --> |yes|G[NORMAL]
+    F --> |no|H[SILENT]
+```
+
 ## Troublshooting
 
 - Unable to upload firmware with `make upload`

@@ -1,14 +1,20 @@
-# Hardware
-
 ## v0.7 (pre-release)
 
-- Fix missing fan_power connection
-- Fix incorrect pin header for LEDs
+### Hardware
+- Fix missing fan_power connection (pin 6)
+- Fix incorrect pin header for LEDs (pin 36 -> pin 3)
+- Add a 3.3v to 5v logic shifter for LEDs to improve reliability
+- Change voltage regulator to switching regulator to reduce heat
+- Increase LEDs to 14
+- Add solder bridge for Q1-B
+- Add solder bridge for Q1
+- Increase size of cutout for voltage regulator
+- Add notches to allow for keying of the board
+- Change to surface mount parts
+
+### Software
+
 
 ## v0.6
 
 Initial Prototype
-
-
-# Software
-
