@@ -1,6 +1,15 @@
-## v0.7 (pre-release)
+# v0.7.1 
 
-### Hardware
+## Hardware
+
+- Minor fixes to incorrect vias
+- Manual routing adjustments to fix DRC
+
+---
+
+# v0.7
+
+## Hardware
 - Fix missing fan_power connection (pin 6)
 - Fix incorrect pin header for LEDs (pin 36 -> pin 3)
 - Add a 3.3v to 5v logic shifter for LEDs to improve reliability
@@ -11,10 +20,12 @@
 - Increase size of cutout for voltage regulator
 - Add notches to allow for keying of the board
 - Change to surface mount parts
+- Add castelated vias for cable attachment points
 
-### Software
+---
+# v0.6
 
+## Hardware
 
-## v0.6
+Initial prototype
 
-Initial Prototype
